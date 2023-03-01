@@ -6,11 +6,21 @@ import org.json.JSONObject;
 import java.util.Scanner;
 
 public class WeatherApp {
-    // Copy your API-KEY here
-    public final static String apiKey = "API-KEY";
+    public final static String apiKey = "ac6b2d9d5637408890e32801232802";
+
     // TODO: Write main function
     public static void main(String[] args) {
 
+        Scanner myScanner = new Scanner(System.in);
+        System.out.print("Please enter the city name : ");
+        String city = myScanner.next();
+
+        String weatherData = getWeatherData(city);
+        double temper = getTemperature(weatherData);
+        int humid = getHumidity(weatherData);
+
+        System.out.println("The temperature in " + city + " is " + temper);
+        System.out.println("The humidity percentage in " + city + " is " + humid);
     }
 
     /**
@@ -41,12 +51,16 @@ public class WeatherApp {
     // TODO: Write getTemperature function returns celsius temperature of city by given json string
     public static double getTemperature(String weatherJson){
         double answer = 0.0;
+        JSONObject data = new JSONObject(weatherJson);
+        answer = data.getJSONObject("current").getDouble("temp_c");
         return answer;
     }
 
     // TODO: Write getHumidity function returns humidity percentage of city by given json string
     public static int getHumidity(String weatherJson){
         int answer = 0;
+        JSONObject data = new JSONObject(weatherJson);
+        answer = data.getJSONObject("current").getInt("humidity");
         return answer;
     }
 }
